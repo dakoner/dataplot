@@ -1,0 +1,129 @@
+
+<html lang='en'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+
+    <link href='images/og-logo.png' rel='icon' type='image/png' />
+
+    <title>Demo</title>
+
+    <link href='css/metricsgraphics.css' rel='stylesheet' type='text/css'>
+    <link href='css/metricsgraphics-demo.css' rel='stylesheet' type='text/css'>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js' charset='utf-8'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+    <script src="js/lib/ace.js" charset="utf-8"></script>
+    <script src='js/metricsgraphics.min.js'></script>
+
+</head>
+
+<body>
+    <div class='container'>
+        <div class='row main-windows-titles'>
+            <div class='col-xs-2'>Data</div>
+            <div class='js-title col-xs-5'></div>
+            <div class='result-title col-xs-5'> </div>
+        </div>
+        <div class='row main-windows'>
+            <div class='data col-xs-2'>
+                <textarea></textarea>
+            </div>
+            <div class='js col-xs-5' id='editor'></div>
+            <div class='result text-center col-xs-5'></div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background-color: #fcfcfc;
+        }
+
+        .container {
+            width: 90%;
+            min-width: 960px;
+        }
+
+        .data textarea {
+            font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+            font-size: 11px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .footer {
+            background-repeat: no-repeat;
+            background-position: center 115px;
+            padding-top: 70px;
+            margin-bottom: 20px;
+        }
+
+        .main-windows-titles {
+            color: #3b3b3b;
+            font-size: 16px;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+
+        .main-windows-titles .js-title a {
+            position: absolute;
+            right: 0;
+            font-size: 70%;
+            margin: 7px 1px 0 0;
+        }
+
+        .main-windows .data,
+        .main-windows .js,
+        .main-windows .result {
+            height: 400px;
+        }
+
+        p {
+            padding-top: 6px;
+        }
+
+        textarea,
+        #editor {
+            border-radius: 3px;
+            border: none;
+            overflow: auto;
+            outline: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+    <script>
+        var default_call = '//modify away!\n'
+            + 'data_graphic({\n'
+            + '  title: "UFO Sightings",\n'
+            + '  description: "Yearly UFO sightings from 1945 to 2010.",\n'
+            + '  data: JSON.parse($(\'.data textarea\').val()),\n'
+            + '  markers: [{\'year\': 1964, \'label\': \'"The Creeping Terror" released\'}],\n'
+            + '  width: 400,\n'
+            + '  height: 250,\n'
+            + '  target: ".result",\n'
+            + '  x_accessor: "created_at",\n'
+            + '  y_accessor: "pressure",\n'
+            + '  interpolate: "monotone"\n'
+            + '});';
+
+        var editor = ace.edit("editor");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.setValue(default_call);
+        editor.gotoLine(1);editor.setHighlightActiveLine(false);
+
+        d3.json('data/314159.json', function(data) {
+            $('.data textarea').val(JSON.stringify(data, null, 2));
+            eval(editor.getValue());
+        })
+        
+        $('.update').on('click', function() {
+            eval(editor.getValue());
+        })
+    </script>
+</body>
+</html>
