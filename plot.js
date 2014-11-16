@@ -1,7 +1,7 @@
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 1500 - margin.left - margin.right,
-    height = 1500 - margin.top - margin.bottom;
+    width = 500 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%a, %d %b %Y %H:%M:%S -0000").parse;
 
@@ -29,7 +29,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data/test.json", function(error, data) {
+d3.json("data/314159.fixed.json", function(error, data) {
   data.forEach(function(d) {
     d.date = parseDate(d.created_at);
       d.pressure = parseFloat(d.pressure);
