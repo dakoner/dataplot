@@ -26,29 +26,29 @@ var line = d3.svg.line()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.json("data/42.fixed.json", function(error, data) {
-  data.forEach(function(d) {
-    d.date = parseDate(d.created_at);
-      d.temp = parseFloat(d.temp);
-  });
+    data.forEach(function(d) {
+	d.date = parseDate(d.created_at);
+	d.temp = parseFloat(d.temp);
+    });
 
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain(d3.extent(data, function(d) { return d.temp; }));
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0,100]);
 
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+    svg.append("g")
+	.attr("class", "x axis")
+	.attr("transform", "translate(0," + height + ")")
+	.call(xAxis);
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
+    svg.append("g")
+	.attr("class", "y axis")
+	.call(yAxis)
 
-  svg.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+    svg.append("path")
+	.datum(data)
+	.attr("class", "line")
+	.attr("d", line);
 });
