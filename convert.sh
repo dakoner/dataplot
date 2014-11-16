@@ -1,1 +1,1 @@
-~/Downloads/jq.exe '.[] | { created_at: .created_at, pressure:.pressure|tonumber }' < data/314159.json  > data/314159.fixed.json  
+/cygdrive/c/Users/dek/Downloads/jq.exe  ".weatherdata | .[] | {created_at:.created_at,temp:.outside_temp|tonumber}"< 42.json  > 42.fixed.json
